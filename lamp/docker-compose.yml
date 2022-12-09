@@ -11,8 +11,7 @@ services:
       - mysql
 
   mysql:
-    image: mysql
-    command: --default-authentication-plugin=mysql_native_password    
+    image: mysql:8.0
     ports:
       - 3306:3306
     environment: 
@@ -25,7 +24,7 @@ services:
       - ./sql:/docker-entrypoint-initdb.d 
 
   phpmyadmin:
-    image: phpmyadmin/phpmyadmin
+    image: phpmyadmin
     ports:
       - 8080:80
     environment:
