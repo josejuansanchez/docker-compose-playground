@@ -4,7 +4,7 @@ Repository to experiment and learn new things about Docker.
 
 ## Examples
 
-- [Example 01](httpd). Simple Apache HTTPD server.
+- [Example 01](httpd). Simple Apache HTTP server.
 - [Example 02](mysql). Simple MySQL server.
 - [Example 03](mysql-phpmyadmin). Two services, one with MySQL and another with phpMyAdmin.
 - [Example 04](mysql-phpmyadmin-native_password). Two services, one with MySQL and another with phpMyAdmin. MySQL uses `mysql_native_password` instead of `caching_sha2_password` as default authentication plugin.
