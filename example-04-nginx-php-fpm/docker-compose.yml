@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  nginx:
+    image: nginx
+    ports:
+      - '80:80'
+    volumes:
+      - ./nginx-config:/etc/nginx/conf.d
+      - ./src:/usr/share/nginx/html
+
+  php-fpm:
+    image: php:8.2-fpm
+    volumes:
+      - ./src:/usr/share/nginx/html

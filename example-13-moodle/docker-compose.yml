@@ -1,0 +1,47 @@
+version: '3'
+
+services:
+  moodle:
+    image: bitnami/moodle:4
+    ports:
+      - 80:8080
+      - 443:8443
+    environment: 
+      - MOODLE_DATABASE_HOST=mariadb
+      - MOODLE_DATABASE_NAME=${MOODLE_DATABASE_NAME}
+      - MOODLE_DATABASE_USER=${MOODLE_DATABASE_USER}
+      - MOODLE_DATABASE_PASSWORD=${MOODLE_DATABASE_PASSWORD}
+    volumes:
+      - moodle_data:/bitnami/moodle
+      - moodledata_data:/bitnami/moodledata
+    depends_on: 
+      - mariadb
+    restart: always
+
+  mariadb:
+    image: mariadb:10.10
+    ports:
+      - 3306:3306
+    environment:
+      - MARIADB_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MARIADB_DATABASE=${MOODLE_DATABASE_NAME}
+      - MARIADB_USER=${MOODLE_DATABASE_USER}
+      - MARIADB_PASSWORD=${MOODLE_DATABASE_PASSWORD}
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    restart: always
+
+  phpmyadmin:
+    image: phpmyadmin
+    ports:
+      - 8080:80
+    environment: 
+      - PMA_ARBITRARY=1
+    depends_on:
+      - mariadb
+    restart: always
+
+volumes:
+  moodle_data:
+  moodledata_data:
+  mariadb_data:
