@@ -5,6 +5,11 @@ services:
     build: ./apache
     ports: 
       - 80:80
+    environment: 
+      - DB_HOST=mysql
+      - DB_NAME=${MYSQL_DATABASE}
+      - DB_USER=${MYSQL_USER}
+      - DB_PASSWORD=${MYSQL_PASSWORD}
     volumes:
       - ./src:/var/www/html
     depends_on:
