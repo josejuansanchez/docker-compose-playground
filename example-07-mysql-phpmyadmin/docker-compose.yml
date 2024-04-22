@@ -12,6 +12,7 @@ services:
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
     volumes:
       - mysql_data:/var/lib/mysql
+    restart: always
 
   phpmyadmin:
     image: phpmyadmin
@@ -21,6 +22,7 @@ services:
       - PMA_HOST=mysql
     depends_on: 
       - mysql 
+    restart: always
 
 volumes:
   mysql_data:
