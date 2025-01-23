@@ -14,7 +14,7 @@ services:
         image: steveltn/https-portal:1
         ports:
             - 80:80
-            - 443:80
+            - 443:443
         environment:
             #DOMAINS: "localhost -> http://web:80 #local"
             DOMAINS: "${DOMAIN} -> http://web:80 #production"
