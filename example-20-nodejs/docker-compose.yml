@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+    nodejs:
+        build: ./src
+
+    https-portal:
+        image: steveltn/https-portal:1
+        ports:
+            - 80:80
+            - 443:443
+        environment:
+            #DOMAINS: "localhost -> http://nodejs:3000 #local"
+            DOMAINS: "${DOMAIN} -> http://nodejs:3000 #production"
+        volumes:
+            - ssl_certs_data:/var/lib/https-portal
+        depends_on:
+            - nodejs
+        restart: always
+
+volumes:
+    data:
+    ssl_certs_data:
