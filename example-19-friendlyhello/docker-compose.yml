@@ -11,3 +11,6 @@ services:
         command: redis-server --appendonly yes
         volumes:
             - data:/data
+
+volumes:
+    data:
