@@ -3,8 +3,6 @@ version: '3'
 services:
     web:
         build: ./web
-        ports:
-            - 80:80
 
     redis:
         image: redis
@@ -12,5 +10,20 @@ services:
         volumes:
             - data:/data
 
+    https-portal:
+        image: steveltn/https-portal:1
+        ports:
+            - 80:80
+            - 443:80
+        environment:
+            #DOMAINS: "localhost -> http://web:80 #local"
+            DOMAINS: "${DOMAIN} -> http://web:80 #production"
+        volumes:
+            - ssl_certs_data:/var/lib/https-portal
+        depends_on:
+            - web
+        restart: always
+
 volumes:
     data:
+    ssl_certs_data:
