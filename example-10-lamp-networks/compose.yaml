@@ -1,8 +1,6 @@
-version: '3'
-
 services: 
   apache:
-    image: josejuansanchez/lamp-crud-app:1.0
+    build: ./apache
     ports: 
       - 80:80
     environment: 
@@ -10,13 +8,18 @@ services:
       - DB_NAME=${MYSQL_DATABASE}
       - DB_USER=${MYSQL_USER}
       - DB_PASSWORD=${MYSQL_PASSWORD}
+    volumes:
+      - ./src:/var/www/html
     depends_on:
       - mysql
+    networks: 
+      - frontend-network
+      - backend-network
 
   mysql:
     image: mysql:8.0
-    ports:
-      - 3306:3306
+    #ports:
+    #  - 3306:3306
     environment: 
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
       - MYSQL_DATABASE=${MYSQL_DATABASE}
@@ -26,6 +29,8 @@ services:
     volumes:
       - mysql_data:/var/lib/mysql
       - ./sql:/docker-entrypoint-initdb.d 
+    networks: 
+      - backend-network
 
   phpmyadmin:
     image: phpmyadmin
@@ -35,6 +40,13 @@ services:
       - PMA_HOST=mysql
     depends_on: 
       - mysql 
+    networks: 
+      - frontend-network
+      - backend-network
 
 volumes:
   mysql_data:
+
+networks:
+  frontend-network:
+  backend-network:

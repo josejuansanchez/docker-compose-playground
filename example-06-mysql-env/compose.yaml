@@ -1,5 +1,3 @@
-version: '3'
-
 services:
   mysql:
     image: mysql:8.0
@@ -12,16 +10,6 @@ services:
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
     volumes:
       - mysql_data:/var/lib/mysql
-    restart: always
-
-  phpmyadmin:
-    image: phpmyadmin
-    ports:
-      - 8080:80
-    environment:
-      - PMA_HOST=mysql
-    depends_on:
-      - mysql
     restart: always
 
 volumes:

@@ -1,9 +1,7 @@
-version: '3'
-
 services: 
-  apache:
-    build: ./apache
-    ports: 
+  nginx:
+    image: nginx
+    ports:
       - 80:80
     environment: 
       - DB_HOST=mysql
@@ -11,12 +9,17 @@ services:
       - DB_USER=${MYSQL_USER}
       - DB_PASSWORD=${MYSQL_PASSWORD}
     volumes:
-      - ./src:/var/www/html
+      - ./nginx:/etc/nginx/conf.d
+      - ./src:/usr/share/nginx/html
+    depends_on:
+      - php-fpm
+
+  php-fpm:
+    build: ./php-fpm
+    volumes:
+      - ./src:/usr/share/nginx/html
     depends_on:
       - mysql
-    networks: 
-      - frontend-network
-      - backend-network
 
   mysql:
     image: mysql:8.0
@@ -27,12 +30,9 @@ services:
       - MYSQL_DATABASE=${MYSQL_DATABASE}
       - MYSQL_USER=${MYSQL_USER}
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
-      - LANG=C.UTF-8
     volumes:
       - mysql_data:/var/lib/mysql
       - ./sql:/docker-entrypoint-initdb.d 
-    networks: 
-      - backend-network
 
   phpmyadmin:
     image: phpmyadmin
@@ -42,13 +42,6 @@ services:
       - PMA_HOST=mysql
     depends_on: 
       - mysql 
-    networks: 
-      - frontend-network
-      - backend-network
 
 volumes:
   mysql_data:
-
-networks:
-  frontend-network:
-  backend-network:

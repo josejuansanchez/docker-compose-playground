@@ -1,5 +1,3 @@
-version: '3'
-
 services: 
   apachephp:
     image: php:8.2-apache

@@ -1,5 +1,3 @@
-version: '3'
-
 services:
   mysql:
     image: mysql:8.0
@@ -12,22 +10,16 @@ services:
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
     volumes:
       - mysql_data:/var/lib/mysql
-    healthcheck:
-      test: mysql --user=${MYSQL_USER} --password=${MYSQL_PASSWORD} -e "SHOW DATABASES;"
-      interval: 1s
-      timeout: 3s
-      retries: 3
     restart: always
 
   phpmyadmin:
     image: phpmyadmin
     ports:
-      - 80:80
+      - 8080:80
     environment:
       - PMA_HOST=mysql
     depends_on:
-      mysql:
-        condition: service_healthy
+      - mysql
     restart: always
 
 volumes:
