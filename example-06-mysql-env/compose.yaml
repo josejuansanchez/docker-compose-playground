@@ -1,8 +1,9 @@
 services:
   mysql:
-    image: mysql:8.0
+    image: mysql:9
+    restart: always
     ports:
-      - 3306:3306
+      - "3306:3306"
     environment:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
       - MYSQL_DATABASE=${MYSQL_DATABASE}
