@@ -1,9 +1,9 @@
-services: 
+services:
   apache:
     build: ./apache
-    ports: 
+    ports:
       - 80:80
-    environment: 
+    environment:
       - DB_HOST=mysql
       - DB_NAME=${MYSQL_DATABASE}
       - DB_USER=${MYSQL_USER}
@@ -12,15 +12,15 @@ services:
       - ./src:/var/www/html
     depends_on:
       - mysql
-    networks: 
+    networks:
       - frontend-network
       - backend-network
 
   mysql:
-    image: mysql:8.0
+    image: mysql:9.0
     #ports:
     #  - 3306:3306
-    environment: 
+    environment:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
       - MYSQL_DATABASE=${MYSQL_DATABASE}
       - MYSQL_USER=${MYSQL_USER}
@@ -28,8 +28,8 @@ services:
       - LANG=C.UTF-8
     volumes:
       - mysql_data:/var/lib/mysql
-      - ./sql:/docker-entrypoint-initdb.d 
-    networks: 
+      - ./sql:/docker-entrypoint-initdb.d
+    networks:
       - backend-network
 
   phpmyadmin:
@@ -38,9 +38,9 @@ services:
       - 8080:80
     environment:
       - PMA_HOST=mysql
-    depends_on: 
-      - mysql 
-    networks: 
+    depends_on:
+      - mysql
+    networks:
       - frontend-network
       - backend-network
 

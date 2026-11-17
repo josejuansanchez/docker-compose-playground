@@ -3,19 +3,19 @@ services:
     image: wordpress
     ports:
       - 80:80
-    environment: 
+    environment:
       - WORDPRESS_DB_HOST=mysql
       - WORDPRESS_DB_NAME=${WORDPRESS_DB_NAME}
       - WORDPRESS_DB_USER=${WORDPRESS_DB_USER}
       - WORDPRESS_DB_PASSWORD=${WORDPRESS_DB_PASSWORD}
-    volumes: 
+    volumes:
       - wordpress_data:/var/www/html
     depends_on:
       - mysql
     restart: always
 
   mysql:
-    image: mysql:8.0
+    image: mysql:9.0
     ports:
       - 3306:3306
     environment:
@@ -31,10 +31,10 @@ services:
     image: phpmyadmin
     ports:
       - 8080:80
-    environment: 
+    environment:
       - PMA_ARBITRARY=1
     restart: always
 
-volumes: 
+volumes:
   mysql_data:
   wordpress_data:
